@@ -34,4 +34,4 @@ const getUser = async ({ email, password }: User) => {
   return { status: 200, message: 'Login successful', token, loginResponse };
 };
 
-export { getUser };
+export default { getUser };
