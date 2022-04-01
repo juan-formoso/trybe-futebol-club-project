@@ -1,4 +1,5 @@
 import * as express from 'express';
+import userController from './controllers/User';
 class App {
   public app: express.Express;
 
@@ -15,6 +16,8 @@ class App {
       next();
     };
     this.app.use(accessControl);
+    this.app.use(express.json());
+    this.app.post('/login', userController.login);
   }
 
   public start(PORT: string | number): void {
