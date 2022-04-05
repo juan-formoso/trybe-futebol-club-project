@@ -1,17 +1,19 @@
 import { Request, Response } from 'express';
-import UserServices from '../services/User';
+import * as UserServices from '../services/User';
 
-const login = async (req: Request, res: Response) => {
+const loginValidation = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  const user = await UserServices.getUser({ email, password });
-  if (user.status === 401) {
-    return res.status(user.status).json({ message: user.message });
+  const { status, message, data } = await UserServices.getUser({ email, password });
+  if (status >= 400) {
+    return res.status(status).json({ message });
   }
-  return res.status(200).json({ 
-    message: user.message, 
-    token: user.token, 
-    loginResponse: user.loginResponse,
-  });
+  return res.status(200).json(data);
 };
 
-export default { login };
+const tokenValidation = async (req: Request, res: Response) => {
+  const token = req.headers.authorization || '';
+  const data = await UserServices.getUserRole(token);
+  return res.status(200).json(data);
+};
+
+export { loginValidation, tokenValidation };
