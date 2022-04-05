@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { verify } from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 import * as fs from 'fs';
 
 const checkToken = (req: Request, res: Response, next: NextFunction) => {
@@ -12,7 +12,7 @@ const checkToken = (req: Request, res: Response, next: NextFunction) => {
     });
   }
   try {
-    const decoded = verify(token, privateKey);
+    jwt.verify(token, privateKey);
     next();
   } catch (error) {
     return res.status(401).json({
