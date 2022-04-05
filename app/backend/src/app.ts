@@ -16,6 +16,10 @@ class App {
       next();
     };
     this.app.use(accessControl);
+    this.routes();
+  }
+
+  private routes(): void {
     this.app.use(express.json());
     this.app.post('/login', userController.login);
   }
