@@ -5,9 +5,12 @@ const getAll = async () => {
   return { status: 200, data: clubs };
 };
 
-const getById = async (id: number) => {
+const getById = async (id: string) => {
   const club = await Club.findByPk(id);
   return { status: 200, data: club };
 };
 
-export default { getAll, getById };
+export default { 
+  getAll, 
+  getById,
+};
