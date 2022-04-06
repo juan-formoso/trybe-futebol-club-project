@@ -1,4 +1,4 @@
-import Matchs from "../database/models/Match";
+import Matchs from '../database/models/Match';
 
 const getMatchPointsHome = (homeTeamGoals: number, awayTeamGoals: number) => {
   let scoreboard = 0;
@@ -35,10 +35,10 @@ const getMatchStatusAway = (homeTeamGoals: number, awayTeamGoals: number) => {
 };
 
 export const getTotals = (
-  id: number,
-  data: Matchs[],
-  home: boolean,
-  away: boolean
+  id: number, 
+  data: Matchs[], 
+  home: boolean, 
+  away: boolean,
 ) => {
   let totalGames = 0;
   let totalPoints = 0;
@@ -57,54 +57,50 @@ export const getTotals = (
 };
 
 export const getTotalStatus = (
-  id: number,
-  data: Matchs[],
-  home: boolean,
-  away: boolean
+  id: number, 
+  data: Matchs[], 
+  home: boolean, 
+  away: boolean,
 ) => {
-  let totalWins = 0;
+  let totalVictories = 0;
   let totalDraws = 0;
   let totalLosses = 0;
-  data.forEach(
-    ({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals }: Matchs) => {
-      if (homeTeam === id && home) {
-        const matchStatus = getMatchStatusHome(homeTeamGoals, awayTeamGoals);
-        totalWins += matchStatus.wins;
-        totalDraws += matchStatus.draws;
-        totalLosses += matchStatus.losses;
-      }
-      if (awayTeam === id && away) {
-        const matchStatus = getMatchStatusAway(homeTeamGoals, awayTeamGoals);
-        totalWins += matchStatus.wins;
-        totalDraws += matchStatus.draws;
-        totalLosses += matchStatus.losses;
-      }
+  data.forEach(({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals }: Matchs) => {
+    if (homeTeam === id && home) {
+      const statusMatch = getMatchStatusHome(homeTeamGoals, awayTeamGoals);
+      totalVictories += statusMatch.wins;
+      totalDraws += statusMatch.draws;
+      totalLosses += statusMatch.losses;
     }
-  );
-  return { totalWins, totalDraws, totalLosses };
+    if (awayTeam === id && away) {
+      const statusMatch = getMatchStatusAway(homeTeamGoals, awayTeamGoals);
+      totalVictories += statusMatch.wins;
+      totalDraws += statusMatch.draws;
+      totalLosses += statusMatch.losses;
+    }
+  });
+  return { totalVictories, totalDraws, totalLosses };
 };
 
 export const getTotalGoals = (
-  id: number,
-  data: Matchs[],
-  home: boolean,
-  away: boolean
+  id: number, 
+  data: Matchs[], 
+  home: boolean, 
+  away: boolean,
 ) => {
   let goalsFavor = 0;
   let goalsOwn = 0;
   let goalsBalance = 0;
-  data.forEach(
-    ({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals }: Matchs) => {
-      if (homeTeam === id && home) {
-        goalsFavor += homeTeamGoals;
-        goalsOwn += awayTeamGoals;
-      }
-      if (awayTeam === id && away) {
-        goalsFavor += awayTeamGoals;
-        goalsOwn += homeTeamGoals;
-      }
+  data.forEach(({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals }: Matchs) => {
+    if (homeTeam === id && home) {
+      goalsFavor += homeTeamGoals;
+      goalsOwn += awayTeamGoals;
     }
-  );
+    if (awayTeam === id && away) {
+      goalsFavor += awayTeamGoals;
+      goalsOwn += homeTeamGoals;
+    }
+  });
   goalsBalance = goalsFavor - goalsOwn;
   return { goalsFavor, goalsOwn, goalsBalance };
 };
