@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import Club from '../database/models/Club';
 import MatchModel from '../database/models/Match';
 
-const getAllMatchs = async (_req: Request, res: Response) => {
+export const getAllMatchs = async (_req: Request, res: Response) => {
   const matchs = await MatchModel.findAll({
     include: [
       { model: Club, as: 'homeClub', attributes: { exclude: ['id'] } },
@@ -12,7 +12,7 @@ const getAllMatchs = async (_req: Request, res: Response) => {
   res.status(200).json(matchs);
 };
 
-const createMatch = async (req: Request, res: Response) => {
+export const createMatch = async (req: Request, res: Response) => {
   const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress } = req.body;
   const match = await MatchModel.create({
     homeTeam,
@@ -24,7 +24,7 @@ const createMatch = async (req: Request, res: Response) => {
   res.status(201).json(match);
 };
 
-const finishMatch = async (req:Request, res: Response) => {
+export const finishMatch = async (req:Request, res: Response) => {
   const { id } = req.params;
   const matchExist = await MatchModel.findByPk(id);
   if (!matchExist) {
@@ -34,7 +34,7 @@ const finishMatch = async (req:Request, res: Response) => {
   res.status(200).json({ message: 'Finish Match' });
 };
 
-const updateMatch = async (req: Request, res: Response) => {
+export const updateMatch = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { homeTeamGoals, awayTeamGoals } = req.body;
   const matchExist = await MatchModel.findByPk(id);
@@ -44,5 +44,3 @@ const updateMatch = async (req: Request, res: Response) => {
   await MatchModel.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
   res.status(200).json({ message: 'Match updated' });
 };
-
-export default { getAllMatchs, createMatch, finishMatch, updateMatch };
