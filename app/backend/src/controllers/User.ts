@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import * as UserServices from '../services/User';
 
-const loginValidation = async (req: Request, res: Response) => {
+const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const { status, message, data } = await UserServices.getUser({ email, password });
   if (status >= 400) {
@@ -16,4 +16,4 @@ const tokenValidation = async (req: Request, res: Response) => {
   return res.status(200).json(data);
 };
 
-export default { loginValidation, tokenValidation };
+export default { login, tokenValidation };
