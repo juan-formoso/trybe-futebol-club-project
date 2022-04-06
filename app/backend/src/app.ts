@@ -1,5 +1,10 @@
 import * as express from 'express';
-import userController from './controllers/User';
+import * as cors from 'cors';
+import ClubController from './controllers/Club';
+import MatchController from './controllers/Match';
+import UserController from './controllers/User';
+import loginValidation from './middlewares/loginValidation';
+import checkToken from './middlewares/Token';
 class App {
   public app: express.Express;
 
@@ -21,7 +26,6 @@ class App {
 
   private routes(): void {
     this.app.use(express.json());
-    this.app.post('/login', userController.login);
   }
 
   public start(PORT: string | number): void {
