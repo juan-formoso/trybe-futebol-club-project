@@ -17,13 +17,13 @@ const tiebreaker = (ratingA: IRating, ratingB: IRating) => {
   return 1;
 };
 
-const ratingOrder = (ratingA: IRating, ratingB: IRating) => {
+const orderRatings = (ratingA: IRating, ratingB: IRating) => {
   if (ratingA.totalPoints !== ratingB.totalPoints) {
     if (ratingA.totalPoints > ratingB.totalPoints) return -1;
     return 1;
   }
-  const result = tiebreaker(ratingA, ratingB);
-  return result;
+  const tiebreakerResult = tiebreaker(ratingA, ratingB);
+  return tiebreakerResult;
 };
 
-export default ratingOrder;
+export default orderRatings;
