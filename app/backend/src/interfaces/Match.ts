@@ -1,8 +1,15 @@
-import Match from '../database/models/Match';
-
-interface MatchDetail extends Match {
-  homeClub: { clubName: string };
-  awayClub: { clubName: string };
+interface IMatch {
+  homeTeam: number,
+  homeTeamGoals: number,
+  awayTeam: number,
+  awayTeamGoals: number,
+  inProgress: boolean,
+  homeClub?: {
+    clubName: string
+  },
+  awayClub?: {
+    clubName: string
+  }
 }
 
-export default MatchDetail;
+export default IMatch;
