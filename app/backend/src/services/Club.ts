@@ -1,16 +1,13 @@
-import Club from '../database/models/Club';
+import Clubs from '../database/models/Club';
 
 const getAll = async () => {
-  const clubs = await Club.findAll();
-  return { status: 200, data: clubs };
+  const clubsData = await Clubs.findAll();
+  return { status: 200, data: clubsData };
 };
 
 const getById = async (id: string) => {
-  const club = await Club.findByPk(id);
+  const club = await Clubs.findByPk(id);
   return { status: 200, data: club };
 };
 
-export default { 
-  getAll, 
-  getById,
-};
+export default { getAll, getById };
