@@ -26,6 +26,18 @@ class App {
 
   private routes(): void {
     this.app.use(express.json());
+    this.app.use(cors());
+    this.app.post('/login', loginValidation, UserController.login);
+    this.app.get('/login/validate', UserController.tokenValidation);
+    this.app.get('/clubs', ClubController.getAll);
+    this.app.get('/clubs/:id', ClubController.getById);
+    this.app.get('/matchs', MatchController.getMatchs);
+    this.app.post('/matchs', checkToken ,MatchController.saveMatch);
+    this.app.patch('/matchs/:id/finish', checkToken, MatchController.endMatch);
+    this.app.patch('/matchs/:id', checkToken, MatchController.modifyMatch);
+    this.app.get('/leaderboard', MatchController.getAllRatings);
+    this.app.get('/leaderboard/home', MatchController.getHomeRatings);
+    this.app.get('/leaderboard/away', MatchController.getAwayRatings);
   }
 
   public start(PORT: string | number): void {
